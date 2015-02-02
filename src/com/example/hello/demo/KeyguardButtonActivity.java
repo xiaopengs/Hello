@@ -2,6 +2,8 @@ package com.example.hello.demo;
 
 import com.example.hello.R;
 import com.example.hello.service.BackgroundService;
+import com.example.hello.service.FLoatingService;
+import com.example.hello.service.FLoatingService2;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,8 +21,9 @@ public class KeyguardButtonActivity extends Activity{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.i("xiaopeng", "xiaopeng");
-		startService(new Intent(this, BackgroundService.class));
+		//startService(new Intent(this, BackgroundService.class));
+		//startService(new Intent(this, FLoatingService.class));
+		startService(new Intent(this, FLoatingService2.class));
 	}
 	
 }

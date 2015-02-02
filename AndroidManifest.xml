@@ -58,7 +58,12 @@
         <service
             android:name="com.example.hello.service.BackgroundService"
             android:exported="false" />
-            
+        <service
+            android:name="com.example.hello.service.FLoatingService"
+            android:exported="false" />
+        <service
+            android:name="com.example.hello.service.FLoatingService2"
+            android:exported="false" />
         <receiver android:name="com.example.hello.widget.MediaAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
