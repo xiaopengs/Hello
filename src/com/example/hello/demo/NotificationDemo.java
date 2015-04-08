@@ -21,17 +21,17 @@ import android.widget.Button;
 import android.widget.RemoteViews;
 
 public class NotificationDemo extends Activity implements OnClickListener{
-	/** Notification¹¹ÔìÆ÷ */
+	/** Notificationæ„é€ å™¨ */
 	private NotificationCompat.Builder mCompatBuilder;
 	
 	private Button btnClearNotification,btnTest1,btnTest2,btnTest3;
-	/** Notification¹ÜÀí */
+	/** Notificationç®¡ç† */
 	public NotificationManager mNotificationManager;
-	/** Notification¹¹ÔìÆ÷ */
+	/** Notificationæ„é€ å™¨ */
 	Builder mBuilder;
-	/** NotificationµÄID */
+	/** Notificationçš„ID */
 	int notifyId = 101;
-	/** NotificationµÄID */
+	/** Notificationçš„ID */
 	int notifyId2 = 101;
 	
 	private BigPictureStyle mNotificationStyle;
@@ -77,10 +77,10 @@ public class NotificationDemo extends Activity implements OnClickListener{
 	}
 	
 	/**
-	 * @»ñÈ¡Ä¬ÈÏµÄpendingIntent,ÎªÁË·ÀÖ¹2.3¼°ÒÔÏÂ°æ±¾±¨´í
-	 * @flagsÊôĞÔ:  
-	 * ÔÚ¶¥²¿³£×¤:Notification.FLAG_ONGOING_EVENT  
-	 * µã»÷È¥³ı£º Notification.FLAG_AUTO_CANCEL 
+	 * @è·å–é»˜è®¤çš„pendingIntent,ä¸ºäº†é˜²æ­¢2.3åŠä»¥ä¸‹ç‰ˆæœ¬æŠ¥é”™
+	 * @flagså±æ€§:  
+	 * åœ¨é¡¶éƒ¨å¸¸é©»:Notification.FLAG_ONGOING_EVENT  
+	 * ç‚¹å‡»å»é™¤ï¼š Notification.FLAG_AUTO_CANCEL 
 	 */
 	public PendingIntent getDefalutIntent(int flags){
 		PendingIntent pendingIntent= PendingIntent.getActivity(this, 1, new Intent(), flags);
@@ -89,17 +89,17 @@ public class NotificationDemo extends Activity implements OnClickListener{
 	
 	private void createNotification1(Context c){
 		mBuilder = new Notification.Builder(this);
-		mBuilder.setContentTitle("²âÊÔ±êÌâ")
-		.setContentText("²âÊÔÄÚÈİ")
+		mBuilder.setContentTitle("æµ‹è¯•æ ‡é¢˜")
+		.setContentText("æµ‹è¯•å†…å®¹")
 		.setNumber(5)
 		.setContentIntent(getDefalutIntent(Notification.FLAG_AUTO_CANCEL))
-		.setTicker("²âÊÔÍ¨ÖªÀ´À²")//Í¨ÖªÊ×´Î³öÏÖÔÚÍ¨ÖªÀ¸£¬´øÉÏÉı¶¯»­Ğ§¹ûµÄ
-		.setWhen(System.currentTimeMillis())//Í¨Öª²úÉúµÄÊ±¼ä£¬»áÔÚÍ¨ÖªĞÅÏ¢ÀïÏÔÊ¾
-		.setPriority(Notification.PRIORITY_DEFAULT)//ÉèÖÃ¸ÃÍ¨ÖªÓÅÏÈ¼¶
-//		.setAutoCancel(true)//ÉèÖÃÕâ¸ö±êÖ¾µ±ÓÃ»§µ¥»÷Ãæ°å¾Í¿ÉÒÔÈÃÍ¨Öª½«×Ô¶¯È¡Ïû  
-		.setOngoing(false)//ture£¬ÉèÖÃËûÎªÒ»¸öÕıÔÚ½øĞĞµÄÍ¨Öª¡£ËûÃÇÍ¨³£ÊÇÓÃÀ´±íÊ¾Ò»¸öºóÌ¨ÈÎÎñ,ÓÃ»§»ı¼«²ÎÓë(Èç²¥·ÅÒôÀÖ)»òÒÔÄ³ÖÖ·½Ê½ÕıÔÚµÈ´ı,Òò´ËÕ¼ÓÃÉè±¸(ÈçÒ»¸öÎÄ¼şÏÂÔØ,Í¬²½²Ù×÷,Ö÷¶¯ÍøÂçÁ¬½Ó)
-		.setDefaults(Notification.DEFAULT_VIBRATE)//ÏòÍ¨ÖªÌí¼ÓÉùÒô¡¢ÉÁµÆºÍÕñ¶¯Ğ§¹ûµÄ×î¼òµ¥¡¢×îÒ»ÖÂµÄ·½Ê½ÊÇÊ¹ÓÃµ±Ç°µÄÓÃ»§Ä¬ÈÏÉèÖÃ£¬Ê¹ÓÃdefaultsÊôĞÔ£¬¿ÉÒÔ×éºÏ£º
-		//Notification.DEFAULT_ALL  Notification.DEFAULT_SOUND Ìí¼ÓÉùÒô // requires VIBRATE permission
+		.setTicker("æµ‹è¯•é€šçŸ¥æ¥å•¦")//é€šçŸ¥é¦–æ¬¡å‡ºç°åœ¨é€šçŸ¥æ ï¼Œå¸¦ä¸Šå‡åŠ¨ç”»æ•ˆæœçš„
+		.setWhen(System.currentTimeMillis())//é€šçŸ¥äº§ç”Ÿçš„æ—¶é—´ï¼Œä¼šåœ¨é€šçŸ¥ä¿¡æ¯é‡Œæ˜¾ç¤º
+		.setPriority(Notification.PRIORITY_DEFAULT)//è®¾ç½®è¯¥é€šçŸ¥ä¼˜å…ˆçº§
+//		.setAutoCancel(true)//è®¾ç½®è¿™ä¸ªæ ‡å¿—å½“ç”¨æˆ·å•å‡»é¢æ¿å°±å¯ä»¥è®©é€šçŸ¥å°†è‡ªåŠ¨å–æ¶ˆ  
+		.setOngoing(false)//tureï¼Œè®¾ç½®ä»–ä¸ºä¸€ä¸ªæ­£åœ¨è¿›è¡Œçš„é€šçŸ¥ã€‚ä»–ä»¬é€šå¸¸æ˜¯ç”¨æ¥è¡¨ç¤ºä¸€ä¸ªåå°ä»»åŠ¡,ç”¨æˆ·ç§¯æå‚ä¸(å¦‚æ’­æ”¾éŸ³ä¹)æˆ–ä»¥æŸç§æ–¹å¼æ­£åœ¨ç­‰å¾…,å› æ­¤å ç”¨è®¾å¤‡(å¦‚ä¸€ä¸ªæ–‡ä»¶ä¸‹è½½,åŒæ­¥æ“ä½œ,ä¸»åŠ¨ç½‘ç»œè¿æ¥)
+		.setDefaults(Notification.DEFAULT_VIBRATE)//å‘é€šçŸ¥æ·»åŠ å£°éŸ³ã€é—ªç¯å’ŒæŒ¯åŠ¨æ•ˆæœçš„æœ€ç®€å•ã€æœ€ä¸€è‡´çš„æ–¹å¼æ˜¯ä½¿ç”¨å½“å‰çš„ç”¨æˆ·é»˜è®¤è®¾ç½®ï¼Œä½¿ç”¨defaultså±æ€§ï¼Œå¯ä»¥ç»„åˆï¼š
+		//Notification.DEFAULT_ALL  Notification.DEFAULT_SOUND æ·»åŠ å£°éŸ³ // requires VIBRATE permission
 		.setSmallIcon(R.drawable.ic_launcher);
 		Bitmap b = BitmapFactory.decodeResource(c.getResources(), R.drawable.ic_appwidget_music_play);
 		mNotificationStyle = new Notification.BigPictureStyle().bigPicture(b);
@@ -114,13 +114,13 @@ public class NotificationDemo extends Activity implements OnClickListener{
 		RemoteViews mRemoteViews = new RemoteViews(getPackageName(), R.layout.view_custom);
 		mRemoteViews.setImageViewResource(R.id.custom_icon, R.drawable.sing_icon);
 //		view_custom.setInt(R.id.custom_icon,"setBackgroundResource",R.drawable.icon);
-		mRemoteViews.setTextViewText(R.id.tv_custom_title, "½ñÈÕÍ·Ìõ");
-		mRemoteViews.setTextViewText(R.id.tv_custom_content, "½ğÖİÓÂÊ¿¹Ù·½Ğû²¼");
+		mRemoteViews.setTextViewText(R.id.tv_custom_title, "ä»Šæ—¥å¤´æ¡");
+		mRemoteViews.setTextViewText(R.id.tv_custom_content, "é‡‘å·å‹‡å£«å®˜æ–¹å®£å¸ƒ");
 		  
 		NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 		String[] events = {"dd", "33", "44"};
 		// Sets a title for the Inbox style big view
-		inboxStyle.setBigContentTitle("´óÊÓÍ¼ÄÚÈİ:");
+		inboxStyle.setBigContentTitle("å¤§è§†å›¾å†…å®¹:");
 		// Moves events into the big view
 	    for (int i=0; i < events.length; i++) {
 	    	inboxStyle.addLine(events[i]);
@@ -129,9 +129,9 @@ public class NotificationDemo extends Activity implements OnClickListener{
 		mCompatBuilder.setContent(mRemoteViews)
 		 			  .setSmallIcon(R.drawable.ic_launcher)
 					  .setContentIntent(getDefalutIntent(Notification.FLAG_AUTO_CANCEL))
-					  .setTicker("²âÊÔÍ¨ÖªÀ´À²")//Í¨ÖªÊ×´Î³öÏÖÔÚÍ¨ÖªÀ¸£¬´øÉÏÉı¶¯»­Ğ§¹ûµÄ
-					  .setWhen(System.currentTimeMillis())//Í¨Öª²úÉúµÄÊ±¼ä£¬»áÔÚÍ¨ÖªĞÅÏ¢ÀïÏÔÊ¾
-					  .setPriority(Notification.PRIORITY_DEFAULT)//ÉèÖÃ¸ÃÍ¨ÖªÓÅÏÈ¼¶
+					  .setTicker("æµ‹è¯•é€šçŸ¥æ¥å•¦")//é€šçŸ¥é¦–æ¬¡å‡ºç°åœ¨é€šçŸ¥æ ï¼Œå¸¦ä¸Šå‡åŠ¨ç”»æ•ˆæœçš„
+					  .setWhen(System.currentTimeMillis())//é€šçŸ¥äº§ç”Ÿçš„æ—¶é—´ï¼Œä¼šåœ¨é€šçŸ¥ä¿¡æ¯é‡Œæ˜¾ç¤º
+					  .setPriority(Notification.PRIORITY_DEFAULT)//è®¾ç½®è¯¥é€šçŸ¥ä¼˜å…ˆçº§
 					  .setOngoing(false)
 					  .setStyle(inboxStyle);
 			         

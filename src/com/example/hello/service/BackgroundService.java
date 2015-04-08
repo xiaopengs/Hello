@@ -1,5 +1,6 @@
 package com.example.hello.service;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
@@ -11,12 +12,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -41,6 +45,8 @@ public class BackgroundService extends Service {
     NotificationManager mNotificationManager;
     private Bitmap icon;
     private static int messageNum = 0;
+    boolean mHasDoubleClicked = false;
+    long lastPressTime;
 
     @Override
     public void onCreate() {
@@ -160,7 +166,50 @@ public class BackgroundService extends Service {
 
         mLayoutParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
         mLayoutParams.format = PixelFormat.RGBA_8888;
+        setTouchEventListener();
         mWinManager.addView(mLayout, mLayoutParams);
+    }
+
+    private void setTouchEventListener() {
+        try {
+            mLayout.setOnTouchListener(new View.OnTouchListener() {
+                private WindowManager.LayoutParams paramsF = mLayoutParams;
+                private int initialY;
+                private float initialTouchY;
+
+                @Override public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            // Get current time in nano seconds.
+                            long pressTime = System.currentTimeMillis();
+                            // If double click...
+                            if (pressTime - lastPressTime <= 300) {
+                                //createNotification();
+                                BackgroundService.this.stopSelf();
+                                mHasDoubleClicked = true;
+                            }
+                            else {     // If not double click....
+                                mHasDoubleClicked = false;
+                            }
+                            lastPressTime = pressTime;
+                            initialY = paramsF.y;
+                            initialTouchY = event.getRawY();
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            paramsF.y = initialY + (int) (event.getRawY() - initialTouchY);
+                            mLayoutParams = paramsF;
+                            mWinManager.updateViewLayout(mLayout, paramsF);
+                            break;
+                    }
+                    return false;
+                }
+            });
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
     }
 
     private void startActivity() {
@@ -192,6 +241,7 @@ public class BackgroundService extends Service {
         return null;
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showNormal() {
 
         Notification n = new Notification.Builder(getApplicationContext())
@@ -201,10 +251,12 @@ public class BackgroundService extends Service {
                 .setNumber(++messageNum)
                 .setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
                 .setContentIntent(getIntent())
+                .setColor(getResources().getColor(android.R.color.holo_blue_light))
                 .setSound(null).build();
         mNotificationManager.notify(NOTIFICATION_ID++, n);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showBigText() {
         Notification.BigTextStyle textStyle = new Notification.BigTextStyle();
         textStyle
@@ -221,7 +273,9 @@ public class BackgroundService extends Service {
                 .setStyle(textStyle)
                 .setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
                 .setSound(null)
-                //.setPublicVersion(getNot())//for 5.0
+                .setPriority(Notification.PRIORITY_MIN)
+                .setPublicVersion(getNot())
+                .setColor(getResources().getColor(android.R.color.holo_blue_light))
                 .setContentIntent(getIntent())
                 .build();
         mNotificationManager.notify(NOTIFICATION_ID++, notification);
@@ -236,6 +290,7 @@ public class BackgroundService extends Service {
                 .setNumber(++messageNum)
                 .setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL)
                 .setContentIntent(getIntent())
+                .setPriority(Notification.PRIORITY_MAX)
                 .setSound(null);
 
        /* builder1.extend(new Notification.Extender() {

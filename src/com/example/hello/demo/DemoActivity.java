@@ -15,7 +15,8 @@ public class DemoActivity extends ListActivity {
 			"NotificationDemo", 
 			"KeyguardButtonActivity",
 			"QQDialogDemoActivity",
-			"FloatMenuActivity"};
+			"FloatMenuActivity",
+            "UnLockActivity"};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

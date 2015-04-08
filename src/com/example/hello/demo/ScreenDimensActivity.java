@@ -39,9 +39,9 @@ public class ScreenDimensActivity extends Activity  {
     }
 	
 	private void printWidth(TextView TV){
-		// Òª»ñÈ¡ÆÁÄ»µÄ¿íºÍ¸ßµÈ²ÎÊı£¬Ê×ÏÈĞèÒªÉùÃ÷Ò»¸öDisplayMetrics¶ÔÏó£¬ÆÁÄ»µÄ¿í¸ßµÈÊôĞÔ´æ·ÅÔÚÕâ¸ö¶ÔÏóÖĞ
+		// è¦è·å–å±å¹•çš„å®½å’Œé«˜ç­‰å‚æ•°ï¼Œé¦–å…ˆéœ€è¦å£°æ˜ä¸€ä¸ªDisplayMetricså¯¹è±¡ï¼Œå±å¹•çš„å®½é«˜ç­‰å±æ€§å­˜æ”¾åœ¨è¿™ä¸ªå¯¹è±¡ä¸­
         DisplayMetrics DM = new DisplayMetrics();
-        // »ñÈ¡´°¿Ú¹ÜÀíÆ÷,»ñÈ¡µ±Ç°µÄ´°¿Ú,µ÷ÓÃgetDefaultDisplay()ºó£¬Æä½«¹ØÓÚÆÁÄ»µÄÒ»Ğ©ĞÅÏ¢Ğ´½øDM¶ÔÏóÖĞ,×îºóÍ¨¹ıgetMetrics(DM)»ñÈ¡
+        // è·å–çª—å£ç®¡ç†å™¨,è·å–å½“å‰çš„çª—å£,è°ƒç”¨getDefaultDisplay()åï¼Œå…¶å°†å…³äºå±å¹•çš„ä¸€äº›ä¿¡æ¯å†™è¿›DMå¯¹è±¡ä¸­,æœ€åé€šè¿‡getMetrics(DM)è·å–
         getWindowManager().getDefaultDisplay().getMetrics(DM);
 
         int wdip = px2dip(getApplicationContext(), getApplicationContext()
@@ -49,7 +49,7 @@ public class ScreenDimensActivity extends Activity  {
         int hdip = px2dip(getApplicationContext(), getApplicationContext()
                 .getResources().getDisplayMetrics().heightPixels);
 
-        // ´òÓ¡»ñÈ¡µÄ¿íºÍ¸ß
+        // æ‰“å°è·å–çš„å®½å’Œé«˜
         TV.setText("densityDpi: "
                 + DM.densityDpi
                 + "\n"

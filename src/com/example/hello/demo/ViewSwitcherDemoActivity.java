@@ -19,25 +19,25 @@ import android.widget.ViewSwitcher.ViewFactory;
 
 public class ViewSwitcherDemoActivity extends Activity {
 
-	// ¶¨ÒåÒ»¸ö³£Á¿£¬ÓÃÓÚÏÔÊ¾Ã¿ÆÁÏÔÊ¾µÄÓ¦ÓÃ³ÌĞòÊı
+	// å®šä¹‰ä¸€ä¸ªå¸¸é‡ï¼Œç”¨äºæ˜¾ç¤ºæ¯å±æ˜¾ç¤ºçš„åº”ç”¨ç¨‹åºæ•°
 	public static final int NUMBER_PER_SCREEN = 12;
 
-	// ´ú±íÓ¦ÓÃ³ÌĞòµÄÄÚ²¿Àà£¬
+	// ä»£è¡¨åº”ç”¨ç¨‹åºçš„å†…éƒ¨ç±»ï¼Œ
 	public static class DataItem {
-		// Ó¦ÓÃ³ÌĞòÃû³Æ
+		// åº”ç”¨ç¨‹åºåç§°
 		public String dataName;
-		// Ó¦ÓÃ³ÌĞòÍ¼±ê
+		// åº”ç”¨ç¨‹åºå›¾æ ‡
 		public Drawable drawable;
 	}
 
-	// ±£´æÏµÍ³ËùÓĞÓ¦ÓÃ³ÌĞòµÄList¼¯ºÏ
+	// ä¿å­˜ç³»ç»Ÿæ‰€æœ‰åº”ç”¨ç¨‹åºçš„Listé›†åˆ
 	private ArrayList<DataItem> items = new ArrayList<DataItem>();
-	// ¼ÇÂ¼µ±Ç°ÕıÔÚÏÔÊ¾µÚ¼¸ÆÁµÄ³ÌĞò
+	// è®°å½•å½“å‰æ­£åœ¨æ˜¾ç¤ºç¬¬å‡ å±çš„ç¨‹åº
 	private int screenNo = -1;
-	// ±£´æ³ÌĞòËùÕ¼µÄ×ÜÆÁÊı
+	// ä¿å­˜ç¨‹åºæ‰€å çš„æ€»å±æ•°
 	private int screenCount;
 	ViewSwitcher switcher;
-	// ´´½¨LayoutInflater¶ÔÏó
+	// åˆ›å»ºLayoutInflaterå¯¹è±¡
 	LayoutInflater inflater;
 
 	@Override
@@ -45,7 +45,7 @@ public class ViewSwitcherDemoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		inflater = LayoutInflater.from(ViewSwitcherDemoActivity.this);
-		// ´´½¨Ò»¸ö°üº¬40¸öÔªËØµÄList¼¯ºÏ£¬ÓÃÓÚÄ£Äâ°üº¬40¸öÓ¦ÓÃ³ÌĞò
+		// åˆ›å»ºä¸€ä¸ªåŒ…å«40ä¸ªå…ƒç´ çš„Listé›†åˆï¼Œç”¨äºæ¨¡æ‹ŸåŒ…å«40ä¸ªåº”ç”¨ç¨‹åº
 		for (int i = 0; i < 40; i++) {
 			String label = "" + i;
 			Drawable drawable = getResources().getDrawable(
@@ -55,34 +55,34 @@ public class ViewSwitcherDemoActivity extends Activity {
 			item.drawable = drawable;
 			items.add(item);
 		}
-		// ¼ÆËãÓ¦ÓÃ³ÌĞòËùÕ¼µÄ×ÜÆÁÊı¡£
-		// Èç¹ûÓ¦ÓÃ³ÌĞòµÄÊıÁ¿ÄÜÕû³ıNUMBER_PER_SCREEN£¬³ı·¨µÄ½á¹û¾ÍÊÇ×ÜÆÁÊı¡£
-		// Èç¹û²»ÄÜÕû³ı£¬×ÜÆÁÊıÓ¦¸ÃÊÇ³ı·¨µÄ½á¹ûÔÙ¼Ó1¡£
+		// è®¡ç®—åº”ç”¨ç¨‹åºæ‰€å çš„æ€»å±æ•°ã€‚
+		// å¦‚æœåº”ç”¨ç¨‹åºçš„æ•°é‡èƒ½æ•´é™¤NUMBER_PER_SCREENï¼Œé™¤æ³•çš„ç»“æœå°±æ˜¯æ€»å±æ•°ã€‚
+		// å¦‚æœä¸èƒ½æ•´é™¤ï¼Œæ€»å±æ•°åº”è¯¥æ˜¯é™¤æ³•çš„ç»“æœå†åŠ 1ã€‚
 		screenCount = items.size() % NUMBER_PER_SCREEN == 0 ? items.size()
 				/ NUMBER_PER_SCREEN : items.size() / NUMBER_PER_SCREEN + 1;
 		switcher = (ViewSwitcher) findViewById(R.id.viewSwitcher);
 		switcher.setFactory(new ViewFactory() {
-			// Êµ¼ÊÉÏ¾ÍÊÇ·µ»ØÒ»¸öGridView×é¼ş
+			// å®é™…ä¸Šå°±æ˜¯è¿”å›ä¸€ä¸ªGridViewç»„ä»¶
 			@Override
 			public View makeView() {
-				// ¼ÓÔØR.layout.slidelistview×é¼ş£¬Êµ¼ÊÉÏ¾ÍÊÇÒ»¸öGridView×é¼ş¡£
+				// åŠ è½½R.layout.slidelistviewç»„ä»¶ï¼Œå®é™…ä¸Šå°±æ˜¯ä¸€ä¸ªGridViewç»„ä»¶ã€‚
 				return inflater.inflate(R.layout.slidelistview, null);
 			}
 		});
-		// Ò³Ãæ¼ÓÔØÊ±ÏÈÏÔÊ¾µÚÒ»ÆÁ¡£
+		// é¡µé¢åŠ è½½æ—¶å…ˆæ˜¾ç¤ºç¬¬ä¸€å±ã€‚
 		next(null);
 	}
 
 	public void next(View v) {
 		if (screenNo < screenCount - 1) {
 			screenNo++;
-			// ÎªViewSwitcherµÄ×é¼şÏÔÊ¾¹ı³ÌÉèÖÃ¶¯»­
+			// ä¸ºViewSwitcherçš„ç»„ä»¶æ˜¾ç¤ºè¿‡ç¨‹è®¾ç½®åŠ¨ç”»
 			switcher.setInAnimation(this, R.anim.slide_in_right);
-			// ÎªViewSwitcherµÄ×é¼şÒş²Ø¹ı³ÌÉèÖÃ¶¯»­
+			// ä¸ºViewSwitcherçš„ç»„ä»¶éšè—è¿‡ç¨‹è®¾ç½®åŠ¨ç”»
 			switcher.setOutAnimation(this, R.anim.slide_out_left);
-			// ¿ØÖÆÏÂÒ»ÆÁ½«ÒªÏÔÊ¾µÄGridView¶ÔÓ¦µÄ Adapter
+			// æ§åˆ¶ä¸‹ä¸€å±å°†è¦æ˜¾ç¤ºçš„GridViewå¯¹åº”çš„ Adapter
 			((GridView) switcher.getNextView()).setAdapter(adapter);
-			// µã»÷ÓÒ±ß°´Å¥£¬ÏÔÊ¾ÏÂÒ»ÆÁ£¬Ò²¿ÉÍ¨¹ıÊÖÊÆ¼ì²âÊµÏÖÏÔÊ¾ÏÂÒ»ÆÁ.
+			// ç‚¹å‡»å³è¾¹æŒ‰é’®ï¼Œæ˜¾ç¤ºä¸‹ä¸€å±ï¼Œä¹Ÿå¯é€šè¿‡æ‰‹åŠ¿æ£€æµ‹å®ç°æ˜¾ç¤ºä¸‹ä¸€å±.
 			switcher.showNext();
 		}
 	}
@@ -90,34 +90,34 @@ public class ViewSwitcherDemoActivity extends Activity {
 	public void prev(View v) {
 		if (screenNo > 0) {
 			screenNo--;
-			// ÎªViewSwitcherµÄ×é¼şÏÔÊ¾¹ı³ÌÉèÖÃ¶¯»­
+			// ä¸ºViewSwitcherçš„ç»„ä»¶æ˜¾ç¤ºè¿‡ç¨‹è®¾ç½®åŠ¨ç”»
 			switcher.setInAnimation(this, android.R.anim.slide_in_left);
-			// ÎªViewSwitcherµÄ×é¼şÒş²Ø¹ı³ÌÉèÖÃ¶¯»­
+			// ä¸ºViewSwitcherçš„ç»„ä»¶éšè—è¿‡ç¨‹è®¾ç½®åŠ¨ç”»
 			switcher.setOutAnimation(this, android.R.anim.slide_out_right);
-			// ¿ØÖÆÏÂÒ»ÆÁ½«ÒªÏÔÊ¾µÄGridView¶ÔÓ¦µÄ Adapter
+			// æ§åˆ¶ä¸‹ä¸€å±å°†è¦æ˜¾ç¤ºçš„GridViewå¯¹åº”çš„ Adapter
 			((GridView) switcher.getNextView()).setAdapter(adapter);
-			// µã»÷×ó±ß°´Å¥£¬ÏÔÊ¾ÉÏÒ»ÆÁ£¬Ò²¿ÉÍ¨¹ıÊÖÊÆ¼ì²âÊµÏÖÏÔÊ¾ÉÏÒ»ÆÁ.
+			// ç‚¹å‡»å·¦è¾¹æŒ‰é’®ï¼Œæ˜¾ç¤ºä¸Šä¸€å±ï¼Œä¹Ÿå¯é€šè¿‡æ‰‹åŠ¿æ£€æµ‹å®ç°æ˜¾ç¤ºä¸Šä¸€å±.
 			switcher.showPrevious();
 		}
 	}
 
-	// ¸ÃBaseAdapter¸ºÔğÎªÃ¿ÆÁÏÔÊ¾µÄGridViewÌá¹©ÁĞ±íÏî
+	// è¯¥BaseAdapterè´Ÿè´£ä¸ºæ¯å±æ˜¾ç¤ºçš„GridViewæä¾›åˆ—è¡¨é¡¹
 	private BaseAdapter adapter = new BaseAdapter() {
 		@Override
 		public int getCount() {
-			// Èç¹ûÒÑ¾­µ½ÁË×îºóÒ»ÆÁ£¬ÇÒÓ¦ÓÃ³ÌĞòµÄÊıÁ¿²»ÄÜÕû³ıNUMBER_PER_SCREEN
+			// å¦‚æœå·²ç»åˆ°äº†æœ€åä¸€å±ï¼Œä¸”åº”ç”¨ç¨‹åºçš„æ•°é‡ä¸èƒ½æ•´é™¤NUMBER_PER_SCREEN
 			if (screenNo == screenCount - 1
 					&& items.size() % NUMBER_PER_SCREEN != 0) {
-				// ×îºóÒ»ÆÁÏÔÊ¾µÄ³ÌĞòÊıÎªÓ¦ÓÃ³ÌĞòµÄÊıÁ¿¶ÔNUMBER_PER_SCREENÇóÓà
+				// æœ€åä¸€å±æ˜¾ç¤ºçš„ç¨‹åºæ•°ä¸ºåº”ç”¨ç¨‹åºçš„æ•°é‡å¯¹NUMBER_PER_SCREENæ±‚ä½™
 				return items.size() % NUMBER_PER_SCREEN;
 			}
-			// ·ñÔòÃ¿ÆÁÏÔÊ¾µÄ³ÌĞòÊıÁ¿ÎªNUMBER_PER_SCREEN
+			// å¦åˆ™æ¯å±æ˜¾ç¤ºçš„ç¨‹åºæ•°é‡ä¸ºNUMBER_PER_SCREEN
 			return NUMBER_PER_SCREEN;
 		}
 
 		@Override
 		public DataItem getItem(int position) {
-			// ¸ù¾İscreenNo¼ÆËãµÚposition¸öÁĞ±íÏîµÄÊı¾İ
+			// æ ¹æ®screenNoè®¡ç®—ç¬¬positionä¸ªåˆ—è¡¨é¡¹çš„æ•°æ®
 			return items.get(screenNo * NUMBER_PER_SCREEN + position);
 		}
 
@@ -130,13 +130,13 @@ public class ViewSwitcherDemoActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View view = convertView;
 			if (convertView == null) {
-				// ¼ÓÔØR.layout.labelicon²¼¾ÖÎÄ¼ş
+				// åŠ è½½R.layout.labeliconå¸ƒå±€æ–‡ä»¶
 				view = inflater.inflate(R.layout.labelicon, null);
 			}
-			// »ñÈ¡R.layout.labelicon²¼¾ÖÎÄ¼şÖĞµÄImageView×é¼ş£¬²¢ÎªÖ®ÉèÖÃÍ¼±ê
+			// è·å–R.layout.labeliconå¸ƒå±€æ–‡ä»¶ä¸­çš„ImageViewç»„ä»¶ï¼Œå¹¶ä¸ºä¹‹è®¾ç½®å›¾æ ‡
 			ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
 			imageView.setImageDrawable(getItem(position).drawable);
-			// »ñÈ¡R.layout.labelicon²¼¾ÖÎÄ¼şÖĞµÄTextView×é¼ş£¬²¢ÎªÖ®ÉèÖÃÎÄ±¾
+			// è·å–R.layout.labeliconå¸ƒå±€æ–‡ä»¶ä¸­çš„TextViewç»„ä»¶ï¼Œå¹¶ä¸ºä¹‹è®¾ç½®æ–‡æœ¬
 			TextView textView = (TextView) view.findViewById(R.id.textview);
 			textView.setText(getItem(position).dataName);
 			return view;
