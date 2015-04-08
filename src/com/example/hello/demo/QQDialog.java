@@ -1,7 +1,7 @@
 package com.example.hello.demo;
 
 import com.example.hello.R;
-import com.example.hello.demo.utils.KeyguardUtils;
+import com.example.hello.utils.KeyguardUtils;
 
 import android.app.Activity;
 import android.content.Context;

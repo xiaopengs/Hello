@@ -1,4 +1,4 @@
-package com.example.hello.demo.utils;
+package com.example.hello.utils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -16,27 +16,7 @@ public class KeyguardUtils {
 			@SuppressWarnings("rawtypes")
 			Class claz = Class.forName("android.app.ActivityManagerNative");
 			Method m2 = claz.getMethod("getDefault");
-			Method m = claz.getMethod("keyguardWaitingForActivityDrawn");
-			Object obj = m2.invoke(null);
-			m.invoke(obj);
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void overrideTranstion() {
-		try {
-			@SuppressWarnings("rawtypes")
-			Class claz = Class.forName("android.view.WindowManagerGlobal");
-			Method m2 = claz.getMethod("getDefault");
-			Method m = claz.getMethod("keyguardWaitingForActivityDrawn");
+			Method m = claz.getMethod("dismissKeyguardOnNextActivity");
 			Object obj = m2.invoke(null);
 			m.invoke(obj);
 
