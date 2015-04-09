@@ -10,7 +10,7 @@ Hello项目计划书
 2.中期计划
     (1)demo类型分类；
 	(2)UI进行material design
-	(3)与gitHub对接；
+	(3)与gitHub对接
 	(4)植入分享模块 ShareSDK或者友盟
 	(5)植入广告模块
 	
