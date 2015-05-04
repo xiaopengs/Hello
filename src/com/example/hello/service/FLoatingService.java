@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -21,31 +22,38 @@ import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
 
 public class FLoatingService extends Service {
-    private static final String TAG = "FLoatingService";
-    private WindowManager windowManager;
-    private ImageView chatHead;
+	private static final String TAG = "FLoatingService";
+	private WindowManager windowManager;
+	private ImageView chatHead;
 	private PopupWindow pwindo;
 	WindowManager.LayoutParams mLayoutParams;
 	boolean mHasDoubleClicked = false;
 	long lastPressTime;
-	
-	
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	@Override 
+
+	@Override
 	public void onCreate() {
 		super.onCreate();
 		windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 		chatHead = new ImageView(this);
+		chatHead.setId(10);
 		chatHead.setImageResource(R.drawable.floating2);
 		addFloatWindow();
 		setTouchEventListener();
 	}
-	
+
+	@Override
+	public void onDestroy() {
+		if(chatHead!= null && chatHead.isShown()){
+			windowManager.removeView(chatHead);
+		}
+		super.onDestroy();
+	}
 	
 	private void setTouchEventListener() {
 		try {
@@ -56,21 +64,22 @@ public class FLoatingService extends Service {
 				private float initialTouchX;
 				private float initialTouchY;
 
-				@Override public boolean onTouch(View v, MotionEvent event) {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
 					switch (event.getAction()) {
 					case MotionEvent.ACTION_DOWN:
 						// Get current time in nano seconds.
 						long pressTime = System.currentTimeMillis();
 						// If double click...
 						if (pressTime - lastPressTime <= 300) {
-							//createNotification();
-							FLoatingService.this.stopSelf();
+							Log.i(TAG, "xiaopeng double click...");
+							// FLoatingService.this.stopSelf();
+							initiatePopupWindow(chatHead);
 							mHasDoubleClicked = true;
-						}
-						else {     // If not double click....
+						} else { // If not double click....
 							mHasDoubleClicked = false;
 						}
-						lastPressTime = pressTime; 
+						lastPressTime = pressTime;
 						initialX = paramsF.x;
 						initialY = paramsF.y;
 						initialTouchX = event.getRawX();
@@ -79,8 +88,10 @@ public class FLoatingService extends Service {
 					case MotionEvent.ACTION_UP:
 						break;
 					case MotionEvent.ACTION_MOVE:
-						paramsF.x = initialX + (int) (event.getRawX() - initialTouchX);
-						paramsF.y = initialY + (int) (event.getRawY() - initialTouchY);
+						paramsF.x = initialX
+								+ (int) (event.getRawX() - initialTouchX);
+						paramsF.y = initialY
+								+ (int) (event.getRawY() - initialTouchY);
 						mLayoutParams = paramsF;
 						windowManager.updateViewLayout(chatHead, paramsF);
 						break;
@@ -96,41 +107,35 @@ public class FLoatingService extends Service {
 
 			@Override
 			public void onClick(View arg0) {
-				initiatePopupWindow(chatHead);
-				//_enable = false;
-				//				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-				//				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-				//				getApplicationContext().startActivity(intent);
+				// initiatePopupWindow(chatHead);
 			}
 		});
-		
+
 	}
 
 	private void initiatePopupWindow(View anchor) {
 		try {
-			Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+			Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+					.getDefaultDisplay();
 			ListPopupWindow popup = new ListPopupWindow(this);
 			popup.setAnchorView(anchor);
-			popup.setWidth((int) (display.getWidth()/(1.5)));
-			ArrayAdapter<String> arrayAdapter = 
-			new ArrayAdapter<String>(this,android.R.layout.simple_list_item_2, new String[]{"hello1", "hello2"});
+			popup.setWidth((int) (display.getWidth() / (1.5)));
+			ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+					android.R.layout.simple_list_item_1, new String[] {
+							"HOME", "hello2" });
 			popup.setAdapter(arrayAdapter);
 			popup.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
-				public void onItemClick(AdapterView<?> arg0, View view, int position, long id3) {
-					//Log.w("tag", "package : "+apps.get(position).pname.toString());
-//					Intent i;
-//					PackageManager manager = getPackageManager();
-//					try {
-//						i = manager.getLaunchIntentForPackage(apps.get(position).pname.toString());
-//						if (i == null)
-//							throw new PackageManager.NameNotFoundException();
-//						i.addCategory(Intent.CATEGORY_LAUNCHER);
-//						startActivity(i);
-//					} catch (PackageManager.NameNotFoundException e) {
-//
-//					}
+				public void onItemClick(AdapterView<?> arg0, View view,
+						int position, long id3) {
+					if(position == 0){
+						Intent intent = new Intent(Intent.ACTION_MAIN); 
+				        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);// 注意 
+				        intent.addCategory(Intent.CATEGORY_HOME); 
+				        startActivity(intent); 
+					}
+					
 				}
 			});
 			popup.show();
@@ -139,8 +144,8 @@ public class FLoatingService extends Service {
 			e.printStackTrace();
 		}
 	}
-	
-	private void addFloatWindow(){
+
+	private void addFloatWindow() {
 		final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
 				WindowManager.LayoutParams.WRAP_CONTENT,
 				WindowManager.LayoutParams.WRAP_CONTENT,
@@ -154,5 +159,5 @@ public class FLoatingService extends Service {
 		mLayoutParams = params;
 		windowManager.addView(chatHead, params);
 	}
-	
+
 }
